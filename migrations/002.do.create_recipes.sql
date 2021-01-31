@@ -4,9 +4,9 @@ CREATE TABLE recipes (
     description TEXT NOT NULL,
     ingredients TEXT NOT NULL,
     instructions TEXT NOT NULL,
-    date_published TIMESTAMPTZ DEFAULT now() NOT NULL,
+    date_modified TIMESTAMPTZ DEFAULT now() NOT NULL,
     meal_type TEXT NOT NULL,
-    isPrivate BOOLEAN DEFAULT true,
+    is_private BOOLEAN DEFAULT true,
     user_id INTEGER
         REFERENCES rk_users(id) ON DELETE CASCADE NOT NULL
 );

@@ -1,28 +1,44 @@
-const xss = require ('xss')
+const knex = require('knex');
+const xss = require('xss');
 
 const RecipesService = {
-    getAllRecipes(db) {
+	getAllRecipes(knex) {
+		return knex.select('*').from('recipes');
+	},
 
-    },
+	getRecipeById(knex, id) {
+		return knex.from('recipes').select('*').where('id', id).first();
+	},
 
-    getRecipeById(db, id) {
+	getRecipeByMealType(knex, meal_type) {
+		return knex
+			.from('recipes')
+			.select('*')
+			.where('meal_type', meal_type)
+			.first();
+	},
 
-    },
+	getRecipesByUser(knex, user_id) {
+		return knex.from('recipes').select('*').where('user_id', user_id).first();
+	},
 
-    getRecipeByMealType(db, meal_type) {
+	insertRecipe(knex, newRecipe) {
+		return knex
+			.insert(newRecipe)
+			.into('recipes')
+			.returning('*')
+			.then((rows) => {
+				return rows[0];
+			});
+	},
 
-    },
+	updateRecipe(knex, id, newRecipeFields) {
+		return knex('recipes').where({ id }).update(newRecipeFields);
+	},
 
-    getRecipeByUser(db, user_id) {
-        
-    }
+	deleteRecipe(db, id) {
+		return knex('recipes').where({ id }).update(newRecipeFields);
+	},
+};
 
-    editRecipe(db, id) {
-
-    },
-
-    deleteRecipe(db, id) {
-
-    },
-
-}
+module.exports = RecipesService;
