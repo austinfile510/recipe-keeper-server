@@ -100,7 +100,6 @@ recipesRouter
 		const { recipe_id } = req.params;
 		RecipesService.deleteRecipe(knexInstance, req.params.recipe_id)
 			.then((numRowsAffected) => {
-				numRowsAffected = recipe_id;
 				logger.info(`Recipe with id ${recipe_id} deleted.`);
 				res.status(204).end();
 			})
@@ -117,7 +116,7 @@ recipesRouter
 			is_private,
 			date_modified,
 		} = req.body;
-		const newRecipe = {
+		const recipeToUpdate = {
 			title,
 			description,
 			ingredients,
@@ -137,7 +136,7 @@ recipesRouter
 		}
 
 		const knexInstance = req.app.get('db');
-		RecipesService.updaterecipe(
+		RecipesService.updateRecipe(
 			knexInstance,
 			req.params.recipe_id,
 			recipeToUpdate
@@ -147,6 +146,8 @@ recipesRouter
 			})
 			.catch(next);
 	});
+
+// TO DO: Add user_id and meal-type functionality
 
 // recipesRouter
 // 	.route('/:user_id')
@@ -173,7 +174,6 @@ recipesRouter
 // 	.get((req, res) => {
 // 		res.json(serializeRecipe(res.recipe));
 // 	})
-
 
 // recipesRouter
 // 	.route('/:meal_type')

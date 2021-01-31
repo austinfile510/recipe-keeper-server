@@ -32,13 +32,13 @@ const RecipesService = {
 			});
 	},
 
-	updateRecipe(knex, id, newRecipeFields) {
-		return knex('recipes').where({ id }).update(newRecipeFields);
+	deleteRecipe(knex, id) {
+		return knex('recipes').where({ id }).delete();
 	},
 
-	deleteRecipe(db, id) {
+	updateRecipe(knex, id, newRecipeFields) {
 		return knex('recipes').where({ id }).update(newRecipeFields);
-	},
+	}
 };
 
 module.exports = RecipesService;

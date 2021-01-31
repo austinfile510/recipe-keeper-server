@@ -1,2 +1,3 @@
 {"message":"isPrivate is required","level":"error"}
 {"message":"Recipe with id 2 created.","level":"info"}
+{"message":"Recipe with id 2 deleted.","level":"info"}
