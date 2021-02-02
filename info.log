@@ -2,3 +2,49 @@
 {"message":"Recipe with id 2 created.","level":"info"}
 {"message":"Recipe with id 2 deleted.","level":"info"}
 {"message":"Recipe with id 3 created.","level":"info"}
+{"message":"Recipe with id 2 deleted.","level":"info"}
+{"message":"Recipe with id 2 deleted.","level":"info"}
+{"message":"Recipe with id 1 created.","level":"info"}
+{"message":"title is required","level":"error"}
+{"message":"description is required","level":"error"}
+{"message":"ingredients is required","level":"error"}
+{"message":"instructions is required","level":"error"}
+{"message":"meal_type is required","level":"error"}
+{"message":"is_private is required","level":"error"}
+{"message":"Recipe with id 1 created.","level":"info"}
+{"message":"Recipe with id 1 created.","level":"info"}
+{"message":"title is required","level":"error"}
+{"message":"description is required","level":"error"}
+{"message":"ingredients is required","level":"error"}
+{"message":"instructions is required","level":"error"}
+{"message":"meal_type is required","level":"error"}
+{"message":"is_private is required","level":"error"}
+{"message":"Recipe with id 1 created.","level":"info"}
+{"message":"Recipe with id 1 created.","level":"info"}
+{"message":"title is required","level":"error"}
+{"message":"description is required","level":"error"}
+{"message":"ingredients is required","level":"error"}
+{"message":"instructions is required","level":"error"}
+{"message":"meal_type is required","level":"error"}
+{"message":"is_private is required","level":"error"}
+{"message":"Recipe with id 1 created.","level":"info"}
+{"message":"Recipe with id 1 created.","level":"info"}
+{"message":"title is required","level":"error"}
+{"message":"description is required","level":"error"}
+{"message":"ingredients is required","level":"error"}
+{"message":"instructions is required","level":"error"}
+{"message":"meal_type is required","level":"error"}
+{"message":"is_private is required","level":"error"}
+{"message":"Recipe with id 1 created.","level":"info"}
+{"message":"Recipe with id 1 created.","level":"info"}
+{"message":"title is required","level":"error"}
+{"message":"description is required","level":"error"}
+{"message":"ingredients is required","level":"error"}
+{"message":"instructions is required","level":"error"}
+{"message":"meal_type is required","level":"error"}
+{"message":"is_private is required","level":"error"}
+{"message":"Invalid update without required fields","level":"error"}
+{"message":"Invalid update without required fields","level":"error"}
+{"message":"Invalid update without required fields","level":"error"}
+{"message":"Invalid update without required fields","level":"error"}
+{"message":"Invalid update without required fields","level":"error"}

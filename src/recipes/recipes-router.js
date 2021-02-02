@@ -15,7 +15,7 @@ const serializeRecipe = (recipe) => ({
 	ingredients: xss(recipe.ingredients),
 	instructions: xss(recipe.instructions),
 	meal_type: recipe.meal_type,
-	isPrivate: recipe.isPrivate,
+	is_private: recipe.is_private,
 	date_modified: recipe.date_modified,
 	user_id: recipe.user_id,
 });
@@ -40,7 +40,6 @@ recipesRouter
 			instructions,
 			meal_type,
 			is_private,
-			date_modified,
 		} = req.body;
 		const newRecipe = {
 			title,
@@ -114,7 +113,6 @@ recipesRouter
 			instructions,
 			meal_type,
 			is_private,
-			date_modified,
 		} = req.body;
 		const recipeToUpdate = {
 			title,
@@ -130,7 +128,7 @@ recipesRouter
 			logger.error(`Invalid update without required fields`);
 			return res.status(400).json({
 				error: {
-					message: `Request body must content 'recipe_name'`,
+					message: `Request body must content either 'title', 'description', 'ingredients', 'instructions', 'meal_type', 'ingredients' or 'is_private'`,
 				},
 			});
 		}

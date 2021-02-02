@@ -7,7 +7,7 @@ const { expect } = require('chai')
 describe('Users Endpoints', function() {
   let db
 
-  const { testUsers } = helpers.makeArticlesFixtures()
+  const { testUsers } = helpers.makeRecipesFixtures()
   const testUser = testUsers[0]
 
   before('make knex instance', () => {
