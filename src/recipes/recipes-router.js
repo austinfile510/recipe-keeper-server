@@ -57,7 +57,7 @@ recipesRouter
 				});
 			}
 		}
-		
+
 		newRecipe.user_id = req.user.id;
 		const knexInstance = req.app.get('db');
 
@@ -72,8 +72,8 @@ recipesRouter
 			.catch(next);
 	});
 
-// Recipe ID Route
 
+// Recipe ID Route
 recipesRouter
 	.route('/:recipe_id')
 	.all((req, res, next) => {
@@ -147,57 +147,5 @@ recipesRouter
 	});
 
 // TO DO: Add user_id and meal-type functionality
-
-// recipesRouter
-// 	.route('/:user_id')
-// 	.all((req, res, next) => {
-// 		const knexInstance = req.app.get('db');
-// 		RecipesService.getRecipeByUser(knexInstance, req.params.user_id)
-// 			.then((recipe) => {
-// 				if (!recipe) {
-// 					return res.status(404).json({
-// 						error: { message: `Recipe doesn't exist` },
-// 					});
-// 				}
-// 				else if (!user) {
-// 					return res.status(404).json({
-// 						error: { message: `User doesn't exist`}
-// 					})
-// 				}
-// 				res.recipe = recipe;
-// 				next();
-// 			})
-// 			.catch(next);
-// 	})
-
-// 	.get((req, res) => {
-// 		res.json(serializeRecipe(res.recipe));
-// 	})
-
-// recipesRouter
-// 	.route('/:meal_type')
-// 	.all((req, res, next) => {
-// 		const knexInstance = req.app.get('db');
-// 		RecipesService.getRecipeByMealType(knexInstance, req.params.meal_type)
-// 			.then((recipe) => {
-// 				if (!recipe) {
-// 					return res.status(404).json({
-// 						error: { message: `Recipe doesn't exist` },
-// 					});
-// 				}
-// 				else if (!user) {
-// 					return res.status(404).json({
-// 						error: { message: `User doesn't exist`}
-// 					})
-// 				}
-// 				res.recipe = recipe;
-// 				next();
-// 			})
-// 			.catch(next);
-// 	})
-
-// 	.get((req, res) => {
-// 		res.json(serializeRecipe(res.recipe));
-// 	});
 
 module.exports = recipesRouter;

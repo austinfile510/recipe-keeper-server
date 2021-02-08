@@ -2,24 +2,16 @@ const knex = require('knex');
 const xss = require('xss');
 
 const RecipesService = {
-	getAllRecipes(knex) {
-		return knex.select('*').from('recipes');
+	getAllRecipes(knex) { // Gets public recipes
+		return knex.select('*').from('recipes').where('is_private', false);
 	},
 
 	getRecipeById(knex, id) {
 		return knex.from('recipes').select('*').where('id', id).first();
 	},
 
-	getRecipeByMealType(knex, meal_type) {
-		return knex
-			.from('recipes')
-			.select('*')
-			.where('meal_type', meal_type)
-			.first();
-	},
-
 	getRecipesByUser(knex, user_id) {
-		return knex.from('recipes').select('*').where('user_id', user_id).first();
+		return knex.from('recipes').select('*').where('user_id', user_id);
 	},
 
 	insertRecipe(knex, newRecipe) {

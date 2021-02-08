@@ -4,7 +4,7 @@ const app = require('../src/app');
 const helpers = require('./test-helpers');
 const { expect } = require('chai');
 
-describe.only('Recipes Endpoints', function () {
+describe('Recipes Endpoints', function () {
 	let db;
 
 	const { testRecipes, testUsers } = helpers.makeRecipesFixtures();
@@ -76,11 +76,17 @@ describe.only('Recipes Endpoints', function () {
 
 	describe(`GET /api/recipes/:recipe_id`, () => {
 		context(`Given no recipes`, () => {
+			const testUsers = helpers.makeUsersArray();
+
+			beforeEach('insert users', () => {
+				return db.into('rk_users').insert(testUsers);
+			});
+
 			it(`responds with 404`, () => {
 				const recipeId = 123456;
 				return supertest(app)
 					.get(`/api/recipes/${recipeId}`)
-					.set('Authorization', helpers.makeAuthHeader(testUsers[0]))
+					.set('Authorization', helpers.makeAuthHeader(testUsers[1]))
 					.expect(404, { error: { message: `Recipe doesn't exist` } });
 			});
 		});
@@ -106,28 +112,6 @@ describe.only('Recipes Endpoints', function () {
 					.set('Authorization', helpers.makeAuthHeader(testUsers[1]))
 					.expect(200, expectedRecipe);
 			});
-
-			context(`Given an XSS attack recipe`, () => {
-				const testUser = helpers.makeUsersArray()[1];
-				const { maliciousRecipe, expectedRecipe } = helpers.makeMaliciousRecipe(
-					testUser
-				);
-
-				beforeEach('insert malicious recipe', () => {
-					return helpers.seedMaliciousRecipe(db, testUser, maliciousRecipe);
-				});
-
-				it('removes XSS attack content', () => {
-					return supertest(app)
-						.get(`/api/recipes/${maliciousRecipe.id}`)
-						.set('Authorization', helpers.makeAuthHeader(testUser))
-						.expect(200)
-						.expect((res) => {
-							expect(res.body.title).to.eql(expectedRecipe.title);
-							expect(res.body.instructions).to.eql(expectedRecipe.instructions);
-						});
-				});
-			});
 		});
 	});
 
@@ -135,6 +119,12 @@ describe.only('Recipes Endpoints', function () {
 
 	describe(`DELETE /api/recipes/:recipe_id`, () => {
 		context(`Given no recipes`, () => {
+			const testUsers = helpers.makeUsersArray();
+
+			beforeEach('insert users', () => {
+				return db.into('rk_users').insert(testUsers);
+			});
+
 			it(`responds with 404 when recipe doesn't exist`, () => {
 				const testUser = helpers.makeUsersArray()[1];
 				return supertest(app)
@@ -186,95 +176,94 @@ describe.only('Recipes Endpoints', function () {
 		});
 
 		it(`adds a new recipe to the database`, () => {
-            const testUser = testUsers[0];
+			const testUser = testUsers[0];
 			const newRecipe = {
-                title: 'Chocolate Cake',
-                description: 'Chocolate Cake with Frosting',
-                ingredients: 'Chocolate, eggs, milk, flour, sugar, butter',
-                instructions: 'Mix and bake at 450 degrees. Apply frosting',
-                date_modified: new Date(),
-                meal_type: 'Dessert',
-                is_private: true,
-            }
+				title: 'Chocolate Cake',
+				description: 'Chocolate Cake with Frosting',
+				ingredients: 'Chocolate, eggs, milk, flour, sugar, butter',
+				instructions: 'Mix and bake at 450 degrees. Apply frosting',
+				date_modified: new Date(),
+				meal_type: 'Dessert',
+				is_private: true,
+			};
 			return supertest(app)
 				.post(`/api/recipes`)
 				.send(newRecipe)
-                .set('Authorization', helpers.makeAuthHeader(testUser))
+				.set('Authorization', helpers.makeAuthHeader(testUser))
 				.expect(201)
 				.expect((res) => {
 					expect(res.body.title).to.eql(newRecipe.title);
 					expect(res.body.description).to.eql(newRecipe.description);
-                    expect(res.body.ingredients).to.eql(newRecipe.ingredients);
-                    expect(res.body.instructions).to.eql(newRecipe.instructions);
-                    expect(res.body.is_private).to.eql(newRecipe.is_private);
-                    expect(res.body.meal_type).to.eql(newRecipe.meal_type);
+					expect(res.body.ingredients).to.eql(newRecipe.ingredients);
+					expect(res.body.instructions).to.eql(newRecipe.instructions);
+					expect(res.body.is_private).to.eql(newRecipe.is_private);
+					expect(res.body.meal_type).to.eql(newRecipe.meal_type);
 					expect(res.headers.location).to.eql(`/api/recipes/${res.body.id}`);
 					const expected = new Intl.DateTimeFormat('en-US').format(new Date());
 					const actual = new Intl.DateTimeFormat('en-US').format(
 						new Date(res.body.date_modified)
 					);
-                    expect(actual).to.eql(expected);
-                    
+					expect(actual).to.eql(expected);
 				})
 				.then((res) =>
 					supertest(app)
 						.get(`/api/recipes/${res.body.id}`)
-                        .set('Authorization', helpers.makeAuthHeader(testUser))
+						.set('Authorization', helpers.makeAuthHeader(testUser))
 						.expect(res.body)
 				);
 		});
 
-		const requiredFields = ['title', 'description', 'ingredients', 'instructions', 'meal_type', 'is_private'];
+		const requiredFields = [
+			'title',
+			'description',
+			'ingredients',
+			'instructions',
+			'meal_type',
+			'is_private',
+		];
 
 		requiredFields.forEach((field) => {
 			const newRecipe = {
 				title: 'Chocolate Cake',
-                description: 'Chocolate Cake with Frosting',
-                ingredients: 'Chocolate, eggs, milk, flour, sugar, butter',
-                instructions: 'Mix and bake at 450 degrees. Apply frosting',
-                date_modified: new Date(),
-                meal_type: 'Dessert',
-                is_private: true,
-                user_id: 1
+				description: 'Chocolate Cake with Frosting',
+				ingredients: 'Chocolate, eggs, milk, flour, sugar, butter',
+				instructions: 'Mix and bake at 450 degrees. Apply frosting',
+				date_modified: new Date(),
+				meal_type: 'Dessert',
+				is_private: true,
+				user_id: 1,
 			};
 
 			it(`responds with 400 missing '${field}' if not supplied`, () => {
-                const testUser = testUsers[1];
-                delete newRecipe[field];
-                
+				const testUser = testUsers[1];
+				delete newRecipe[field];
+
 				return supertest(app)
 					.post(`/api/recipes`)
 					.send(newRecipe)
-                    .set('Authorization', helpers.makeAuthHeader(testUser))
+					.set('Authorization', helpers.makeAuthHeader(testUser))
 					.expect(400, {
 						error: { message: `'${field}' is required` },
 					});
 			});
 		});
+	});
 
-		it('removes XSS attack content from response', () => {
-			const { maliciousRecipe, expectedRecipe } = helpers.makeMaliciousRecipe();
-			return supertest(app)
-				.post(`/api/recipes`)
-				.send(maliciousRecipe)
-                .set('Authorization', helpers.makeAuthHeader(testUser))
-				.expect(201)
-				.expect((res) => {
-					expect(res.body.title).to.eql(expectedRecipe.title);
-					expect(res.body.content).to.eql(expectedRecipe.content);
-				});
-		});
-    });
+	// Update Recipe
 
-    // Update Recipe
-    
-    describe.only(`PATCH /api/recipes`, () => {
+	describe(`PATCH /api/recipes`, () => {
 		context(`Given no recipes`, () => {
+			const testUsers = helpers.makeUsersArray();
+
+			beforeEach('insert users', () => {
+				return db.into('rk_users').insert(testUsers);
+			});
+
 			it(`responds with 404 when recipe doesn't exist`, () => {
-                const testUser = helpers.makeUsersArray()[1];
+				const testUser = helpers.makeUsersArray()[1];
 				return supertest(app)
 					.delete(`/api/recipes/123`)
-                    .set('Authorization', helpers.makeAuthHeader(testUser))
+					.set('Authorization', helpers.makeAuthHeader(testUser))
 					.expect(404, {
 						error: { message: `Recipe doesn't exist` },
 					});
@@ -295,8 +284,8 @@ describe.only('Recipes Endpoints', function () {
 			});
 
 			it('responds with 204 and updates the recipe', () => {
-                const idToUpdate = 2;
-                const testUser = testUsers[1];
+				const idToUpdate = 2;
+				const testUser = testUsers[1];
 				const updateRecipe = {
 					title: 'updated-title',
 					instructions: 'Updated recipes',
@@ -307,23 +296,23 @@ describe.only('Recipes Endpoints', function () {
 				};
 				return supertest(app)
 					.patch(`/api/recipes/${idToUpdate}`)
-                    .set('Authorization', helpers.makeAuthHeader(testUser))
+					.set('Authorization', helpers.makeAuthHeader(testUser))
 					.send(updateRecipe)
 					.expect(204)
 					.then((res) => {
 						return supertest(app)
 							.get(`/api/recipes/${idToUpdate}`)
-                            .set('Authorization', helpers.makeAuthHeader(testUser))
+							.set('Authorization', helpers.makeAuthHeader(testUser))
 							.expect(expectedRecipe);
 					});
 			});
 
 			it(`responds with 400 when no required fields supplied`, () => {
-                const testUser = testUsers[1];
+				const testUser = testUsers[1];
 				const idToUpdate = 2;
 				return supertest(app)
 					.patch(`/api/recipes/${idToUpdate}`)
-                    .set('Authorization', helpers.makeAuthHeader(testUser))
+					.set('Authorization', helpers.makeAuthHeader(testUser))
 					.send({ irrelevantField: 'foo' })
 					.expect(400, {
 						error: {
@@ -333,7 +322,7 @@ describe.only('Recipes Endpoints', function () {
 			});
 
 			it(`responds with 204 when updating only a subset of fields`, () => {
-                const testUser = testUsers[1];
+				const testUser = testUsers[1];
 				const idToUpdate = 2;
 				const updateRecipe = {
 					title: 'updated recipe title',
@@ -345,7 +334,7 @@ describe.only('Recipes Endpoints', function () {
 
 				return supertest(app)
 					.patch(`/api/recipes/${idToUpdate}`)
-                    .set('Authorization', helpers.makeAuthHeader(testUser))
+					.set('Authorization', helpers.makeAuthHeader(testUser))
 					.send({
 						...updateRecipe,
 						fieldToIgnore: 'should not be in GET response',
@@ -354,7 +343,7 @@ describe.only('Recipes Endpoints', function () {
 					.then((res) =>
 						supertest(app)
 							.get(`/api/recipes/${idToUpdate}`)
-                            .set('Authorization', helpers.makeAuthHeader(testUser))
+							.set('Authorization', helpers.makeAuthHeader(testUser))
 							.expect(expectedRecipe)
 					);
 			});
