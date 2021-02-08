@@ -16,6 +16,7 @@ const serializeRecipe = (recipe) => ({
 	meal_type: recipe.meal_type,
 	is_private: recipe.is_private,
 	date_modified: recipe.date_modified,
+	author: recipe.author,
 	user_id: recipe.user_id,
 });
 

@@ -7,6 +7,8 @@ CREATE TABLE recipes (
     date_modified TIMESTAMPTZ DEFAULT now() NOT NULL,
     meal_type TEXT NOT NULL,
     is_private BOOLEAN DEFAULT true,
+    author TEXT 
+        REFERENCES rk_users(user_name) ON DELETE CASCADE NOT NULL,
     user_id INTEGER
         REFERENCES rk_users(id) ON DELETE CASCADE NOT NULL
 );

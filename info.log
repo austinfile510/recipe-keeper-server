@@ -177,3 +177,11 @@
 {"message":"Recipe with id 5 created.","level":"info"}
 {"message":"Recipe with id 6 created.","level":"info"}
 {"message":"Recipe with id 7 created.","level":"info"}
+{"message":"Recipe with id 1 created.","level":"info"}
+{"message":"Recipe with id 1 deleted.","level":"info"}
+{"message":"Recipe with id 2 created.","level":"info"}
+{"message":"Recipe with id 2 deleted.","level":"info"}
+{"message":"Recipe with id 3 created.","level":"info"}
+{"message":"Recipe with id 4 created.","level":"info"}
+{"message":"Recipe with id 3 deleted.","level":"info"}
+{"message":"Recipe with id 5 created.","level":"info"}

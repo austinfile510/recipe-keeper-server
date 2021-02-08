@@ -17,6 +17,7 @@ const serializeRecipe = (recipe) => ({
 	meal_type: recipe.meal_type,
 	is_private: recipe.is_private,
 	date_modified: recipe.date_modified,
+	author: recipe.author,
 	user_id: recipe.user_id,
 });
 
@@ -59,6 +60,7 @@ recipesRouter
 		}
 
 		newRecipe.user_id = req.user.id;
+		newRecipe.author = req.user.user_name;
 		const knexInstance = req.app.get('db');
 
 		RecipesService.insertRecipe(knexInstance, newRecipe)
@@ -145,7 +147,5 @@ recipesRouter
 			})
 			.catch(next);
 	});
-
-// TO DO: Add user_id and meal-type functionality
 
 module.exports = recipesRouter;
