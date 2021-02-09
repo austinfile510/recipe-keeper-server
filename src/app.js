@@ -21,9 +21,10 @@ app.use(
 );
 
 app.use('/api/recipes', recipesRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/my-recipes', myRecipesRouter);
-app.use('/api/auth', authRouter);
+// app.use('/api/users', usersRouter);
+// app.use('/api/my-recipes', myRecipesRouter);
+// app.use('/api/auth', authRouter);
+
 
 
 app.get('/', (req, res) => {
