@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 const xss = require('xss');
 const logger = require('../logger');
-// const { requireAuth } = require('../middleware/jwt-auth');
+const { requireAuth } = require('../middleware/jwt-auth');
 const RecipesService = require('../recipes/recipes-service');
 
 const myRecipesRouter = express.Router();
@@ -23,7 +23,7 @@ const serializeRecipe = (recipe) => ({
 // My Recipes Route
 myRecipesRouter
 	.route('/')
-	.get((req, res, next) => {
+	.get(requireAuth, (req, res, next) => {
 		const currentUser = req.user.id;
 		const knexInstance = req.app.get('db');
 		RecipesService.getRecipesByUser(knexInstance, currentUser).then(

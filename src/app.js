@@ -4,7 +4,6 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV, API_ENDPOINT } = require('./config');
-const errorHandler = require('./error-handler');
 const authRouter = require('./auth/auth-router');
 const usersRouter = require('./users/users-router');
 const recipesRouter = require('./recipes/recipes-router');
@@ -27,7 +26,6 @@ app.use('/api/my-recipes', myRecipesRouter);
 app.use('/api/auth', authRouter);
 
 
-
 app.get('/', (req, res) => {
 	res.send('Hello, world!');
 });
@@ -42,7 +40,5 @@ app.use(function errorHandler(error, req, res, next) {
 	}
 	res.status(500).json(response);
 });
-
-app.use(errorHandler);
 
 module.exports = app;
