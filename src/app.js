@@ -21,13 +21,24 @@ app.use(
 	})
 );
 
-app.use('/api/users', usersRouter);
 app.use('/api/recipes', recipesRouter);
+app.use('/api/users', usersRouter);
 app.use('/api/my-recipes', myRecipesRouter);
 // app.use('/api/auth', authRouter);
 
 app.get('/', (req, res) => {
 	res.send('Hello, world!');
+});
+
+app.use(function errorHandler(error, req, res, next) {
+	let response;
+	if (NODE_ENV === 'production') {
+		response = { error: { message: 'Server error' } };
+	} else {
+		console.error(error);
+		response = { message: error.message, error };
+	}
+	res.status(500).json(response);
 });
 
 app.use(errorHandler);
