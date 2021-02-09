@@ -19,7 +19,7 @@ function requireAuth(req, res, next) {
     )
       .then(user => {
         if (!user)
-          console.log('oops, chicken')
+          console.log('hello there')
           return res.status(401).json({ error: 'Unauthorized request' })
 
         req.user = user
@@ -30,7 +30,7 @@ function requireAuth(req, res, next) {
         next(err)
       })
   } catch(error) {
-    console.log(error)
+    console.log('general kenobi')
     res.status(401).json({ error: 'Unauthorized request' })
   }
 }
