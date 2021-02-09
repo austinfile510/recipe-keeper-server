@@ -16,7 +16,7 @@
   },
   "keywords": [],
   "engines": {
-    "node": "12.19.0"
+    "node": "14.15.4"
   },
   "author": "Austin File <austinfile510@gmail.com>",
   "license": "ISC",
