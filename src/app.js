@@ -5,7 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV, API_ENDPOINT } = require('./config');
 const errorHandler = require('./error-handler');
-const authRouter = require('./auth/auth-router');
+// const authRouter = require('./auth/auth-router');
 const usersRouter = require('./users/users-router');
 const recipesRouter = require('./recipes/recipes-router');
 const myRecipesRouter = require('./my-recipes/my-recipes-router');
@@ -24,7 +24,7 @@ app.use(
 app.use('/api/users', usersRouter);
 app.use('/api/recipes', recipesRouter);
 app.use('/api/my-recipes', myRecipesRouter);
-app.use('/api/auth', authRouter);
+// app.use('/api/auth', authRouter);
 
 app.get('/', (req, res) => {
 	res.send('Hello, world!');
