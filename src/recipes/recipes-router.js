@@ -33,7 +33,7 @@ recipesRouter
 			})
 			.catch(next);
 	})
-	.post(jsonParser, requireAuth, (req, res, next) => {
+	.post(jsonParser, (req, res, next) => {
 		const {
 			title,
 			description,
