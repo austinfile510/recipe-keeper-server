@@ -3,7 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
-const { NODE_ENV, API_ENDPOINT } = require('./config');
+const { NODE_ENV, API_ENDPOINT, CORS_METHODS } = require('./config');
 const authRouter = require('./auth/auth-router');
 const usersRouter = require('./users/users-router');
 const recipesRouter = require('./recipes/recipes-router');
@@ -17,6 +17,7 @@ app.use(helmet());
 app.use(
 	cors({
 		origin: API_ENDPOINT,
+		methods: CORS_METHODS
 	})
 );
 
