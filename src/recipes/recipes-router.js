@@ -3,6 +3,7 @@ const express = require('express');
 const xss = require('xss');
 const logger = require('../logger');
 const RecipesService = require('./recipes-service');
+const { requireAuth } = require('../middleware/jwt-auth');
 
 const recipesRouter = express.Router();
 const jsonParser = express.json();
@@ -32,7 +33,7 @@ recipesRouter
 			})
 			.catch(next);
 	})
-	.post(jsonParser, (req, res, next) => {
+	.post(requireAuth, jsonParser, (req, res, next) => {
 		const {
 			title,
 			description,
