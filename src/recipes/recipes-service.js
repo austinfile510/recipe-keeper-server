@@ -2,7 +2,8 @@ const knex = require('knex');
 const xss = require('xss');
 
 const RecipesService = {
-	getAllRecipes(knex) { // Gets public recipes
+	getAllRecipes(knex) {
+		// Gets public recipes
 		return knex.select('*').from('recipes').where('is_private', false);
 	},
 
@@ -11,6 +12,7 @@ const RecipesService = {
 	},
 
 	getRecipesByUser(knex, user_id) {
+		// Gets recipe by UserId. Used for /my-recipes
 		return knex.from('recipes').select('*').where('user_id', user_id);
 	},
 
@@ -30,7 +32,7 @@ const RecipesService = {
 
 	updateRecipe(knex, id, newRecipeFields) {
 		return knex('recipes').where({ id }).update(newRecipeFields);
-	}
+	},
 };
 
 module.exports = RecipesService;

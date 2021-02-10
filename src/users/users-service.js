@@ -9,9 +9,10 @@ const UsersService = {
 		return knex.from('rk_users').select('*').where('id', id).first();
 	},
 
-	hasUserWithUserName(db, user_name) {
+	hasUserWithUserName(db, user_name, email) {
 		return db('rk_users')
 			.where({ user_name })
+			.orWhere({ email })
 			.first()
 			.then((user) => !!user);
 	},

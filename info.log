@@ -187,3 +187,11 @@
 {"message":"Recipe with id 5 created.","level":"info"}
 {"message":"Recipe with id 4 deleted.","level":"info"}
 {"message":"Recipe with id 7 created.","level":"info"}
+{"message":"Recipe with id 5 deleted.","level":"info"}
+{"message":"Recipe with id 7 deleted.","level":"info"}
+{"message":"Recipe with id 8 created.","level":"info"}
+{"message":"Recipe with id 8 deleted.","level":"info"}
+{"message":"Recipe with id 9 created.","level":"info"}
+{"message":"Recipe with id 9 deleted.","level":"info"}
+{"message":"Recipe with id 10 created.","level":"info"}
+{"message":"Recipe with id 10 deleted.","level":"info"}

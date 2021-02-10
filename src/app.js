@@ -17,7 +17,7 @@ app.use(helmet());
 app.use(
 	cors({
 		origin: API_ENDPOINT,
-		methods: CORS_METHODS
+		methods: CORS_METHODS,
 	})
 );
 
@@ -25,7 +25,6 @@ app.use('/api/recipes', recipesRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/my-recipes', myRecipesRouter);
 app.use('/api/auth', authRouter);
-
 
 app.get('/', (req, res) => {
 	res.send('Hello, world!');

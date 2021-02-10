@@ -1,26 +1,24 @@
-# Express Boilerplate!
+# Recipe Keeper
 
-This is a boilerplate project used for starting new projects!
+An Express API by Austin File
+## Live App: 
+https://recipe-keeper-client.vercel.app/
 
-## Set up
+## Description/Summary
+This is a simple-to-use recipe creation and storage app. Keep all your recipes in one place, right where you need them, when you need them!
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+You can start using the app by registering a new user account. Click "Register" at the top of the app's page and follow the instructions. After that, you'll be taken to the Login screen to sign in and start creating and keeping track of your recipes.
 
-1. Clone this repository to your local machine `git clone https://github.com/austinfile510/express-boilerplate`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
 
-## Scripts
+## Documentation
+This API runs at the following endpoints:
 
-Start the application `npm start`
+/recipes - Acquires all public recipes in the database via GET request.
+/recipes/:recipeId - Acquires recipe by ID. Used for GET, DELETE, and POST requests (retrieving, deleting, and creating new recipes)
+/auth/login - Used to POST login requests
+/users - Used to POST new users to the database.
+/my-recipes - Gets the recipes for the currently logged in user.
+### Technology Used
+This project was bootstrapped with Express. [JWT](https://jwt.io/) is used for user authentication.
 
-Start nodemon for the application `npm run dev`
-
-Run the tests `npm test`
-
-## Deploying
-
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's main branch.
+Additional Packages used: cors, dotenv, helmet, morgan, knex, winston, postgrator-cli, chai, mocha, nodemon

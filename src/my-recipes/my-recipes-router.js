@@ -21,16 +21,12 @@ const serializeRecipe = (recipe) => ({
 });
 
 // My Recipes Route
-myRecipesRouter
-	.route('/')
-	.get(requireAuth, (req, res, next) => {
-		const currentUser = req.user.id;
-		const knexInstance = req.app.get('db');
-		RecipesService.getRecipesByUser(knexInstance, currentUser).then(
-			(recipes) => {
-				res.json(recipes.map(serializeRecipe));
-			}
-		);
-    });
-    
-    module.exports = myRecipesRouter
+myRecipesRouter.route('/').get(requireAuth, (req, res, next) => {
+	const currentUser = req.user.id;
+	const knexInstance = req.app.get('db');
+	RecipesService.getRecipesByUser(knexInstance, currentUser).then((recipes) => {
+		res.json(recipes.map(serializeRecipe));
+	});
+});
+
+module.exports = myRecipesRouter;
